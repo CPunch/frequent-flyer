@@ -1,7 +1,5 @@
 import React from "react";
-import mapboxgl from 'mapbox-gl';
-import MapboxExample from "../map.jsx"; 
-import 'mapbox-gl/dist/mapbox-gl.css';
+import MapboxExample from "map.jsx"; 
 
 const App = () => {
   return (
