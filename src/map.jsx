@@ -6,11 +6,9 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 const MapboxExample = () => {
   const mapContainerRef = useRef();
   const mapRef = useRef();
-  const Token = 'pk.eyJ1Ijoic2V0aHRzdHViYnMiLCJhIjoiY202Y21tYzg2MGxyZDJrcHllMzMyYnY5dCJ9.KU9IvWK3Y58UKAFpc8u8LA';
-
 
   useEffect(() => {
-    mapboxgl.accessToken = Token;
+    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_KEY;
 
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
