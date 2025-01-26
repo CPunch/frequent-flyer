@@ -5,7 +5,7 @@ const fetchFlights = async (params = {}) => {
   // Construct query parameters
   const queryString = new URLSearchParams({
     access_key: ACCESS_KEY,
-    ...params, 
+    ...params,
   }).toString();
 
   try {

@@ -1,4 +1,3 @@
-import React from "react";
 import MapboxExample from "./map.jsx"; 
 
 const App = () => {
