@@ -122,12 +122,12 @@ const importCSVData = () => {
     });
 };
 
-const getAirportByID = (id) => {
-  return airportsTbl.findOne({ id: id });
+const getAirportByID = async (id) => {
+  return await airportsTbl.findOne({ id: id }).lean();
 }
 
-const getRouteByID = (id) => {
-  return routesTbl.findOne({ id: id });
+const getRouteByID = async (id) => {
+  return await routesTbl.findOne({ ID: id }).lean();
 }
 
 export { connectToDatabase, importCSVData, getAirportByID, getRouteByID };
