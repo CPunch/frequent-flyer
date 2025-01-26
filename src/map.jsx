@@ -20,7 +20,7 @@ const MapboxExample = ({ className }) => {
   }, []);
 
   return (
-    <div className={`relative h-[50vh] flex justify-center items-center ${className}`}>
+    <div className={`relative flex justify-center items-center ${className}`}>
       <div
         ref={mapContainerRef}
         className="border-2 border-solid flex-.5 w-4/5 h-4/5 bg-white relative z-10 shadow-lg"
