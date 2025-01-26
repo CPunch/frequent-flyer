@@ -18,7 +18,7 @@ const connectToDatabase = async () => {
 }
 
 // Schema for users of app
-const UserSchema = new mongoose.Schema({
+const routesSchema = new mongoose.Schema({
     airline: { type: String, required: true,},
     airlineID: { type: String, required: true,},
     sourceAirport: { type: String, required: false,},
@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
     stops: {type: String, required: false,},
     equipment: {type: String, required: false,},
 });
-const User = mongoose.model('routes', UserSchema);
+const routesTbl = mongoose.model('routes', routesSchema);
 
 const importCSVData = () => {
   const results = []; // Array to hold parsed data
@@ -39,7 +39,6 @@ const importCSVData = () => {
     .pipe(csv())
     .on('data', (data) => {
       // Push each row into the results array
-      // TODO: Nah cuz why is half the data NaN and/or missing??? I'm too tired
       results.push({
           airline: data.airline,
           airlineID: parseInt(data.airlineID),
@@ -52,16 +51,13 @@ const importCSVData = () => {
           equipment: data.equipment
       });
     })
-    .on('end', () => {
-      console.log(results[0])
+    .on('end', async () => {
+      // clear table
+      await routesTbl.deleteMany({})
+
       // Insert parsed data into MongoDB
-      User.insertMany(results)
-        .then(() => {
-          console.log('Data imported successfully!');
-        })
-        .catch((err) => {
-          console.error('Error inserting data:', err);
-        });
+      await routesTbl.insertMany(results)
+      console.log('Data imported successfully!');
     });
 };
 
