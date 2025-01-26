@@ -57,10 +57,8 @@ app.get("/", (req, resp) => {
 
     resp.send("App is Working");
     // You can check backend is working or not by 
-    // entering http://loacalhost:5000
+    // entering http://localhost:5000
     
-    // If you see App is working means
-    // backend working properly
 });
 
 ///*
