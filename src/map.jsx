@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
-
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MapboxExample = () => {
@@ -21,11 +20,19 @@ const MapboxExample = () => {
   }, []);
 
   return (
-    <div
-      style={{ height: '100%' }}
-      ref={mapContainerRef}
-      className="map-container"
-    />
+    <div 
+      className="relative h-[50vh] flex justify-center items-center"
+      style={{
+        backgroundImage: `url('/src/assets/cloud_background.png'), linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7))`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div
+        ref={mapContainerRef}
+        className="flex-.5 w-4/5 h-4/5 bg-white relative z-10 shadow-lg"
+      />
+    </div>
   );
 };
 
