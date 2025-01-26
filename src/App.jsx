@@ -6,9 +6,9 @@ import Landing from "./Landing.jsx";
 
 const App = () => {
   return (
-    <div>
-      <Tool />
-      <Landing />
+    <div class="flex-col justify-center">
+      <Tool className={`w-2/3 mx-auto`} />
+      {/* <Landing className={`w-3/4 mx-auto`} /> */}
     </div>
   );
 };
