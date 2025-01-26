@@ -66,7 +66,7 @@ const people = [
   },
 ]
 
-const Dropdown = () => {
+const Dropdown = ({ className }) => {
   const [selected, setSelected] = useState(people[3])
 
   return (

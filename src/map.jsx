@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const MapboxExample = () => {
+const MapboxExample = ({ className }) => {
   const mapContainerRef = useRef();
   const mapRef = useRef();
 
@@ -20,17 +20,10 @@ const MapboxExample = () => {
   }, []);
 
   return (
-    <div 
-      className="relative h-[50vh] flex justify-center items-center"
-      style={{
-        backgroundImage: `url('/src/assets/cloud_background.png'), linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7))`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
+    <div className={`relative h-[50vh] flex justify-center items-center ${className}`}>
       <div
         ref={mapContainerRef}
-        className="flex-.5 w-4/5 h-4/5 bg-white relative z-10 shadow-lg"
+        className="border-2 border-solid flex-.5 w-4/5 h-4/5 bg-white relative z-10 shadow-lg"
       />
     </div>
   );
