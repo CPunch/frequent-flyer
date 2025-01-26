@@ -1,23 +1,14 @@
-// Code  for mongoose config in backend
-// Filename - backend/index.js
-
+// Code for mongoose config in backend
 // To connect with your mongoDB database
-/*
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/', {
-    dbName: 'FlightDB',
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}, err => err ? console.log(err) : 
-    console.log('Connected to FlightDB database'));
-*/
 
 const mongoose = require('mongoose');
+const fs = require('fs');
+const csv = require('csv-parser'); // csv-parser to read the csv file
 const connectToDatabase = async () => {
     try {
         await mongoose.connect('mongodb+srv://chzbrgrs:L2tMFEsDvF8SrLiU@flightdb.0adq5.mongodb.net/', {
           useNewUrlParser: true,
-          useUnifiedTopology: true,
+          //useUnifiedTopology: true,
         });
         console.log('MongoDB connected successfully');
     } catch (error) {
@@ -32,27 +23,38 @@ const connectToDatabase = async () => {
         }
     };
 }
+// I am quite possible inserting infinite duplicates, so I be dropping (my sanity)
+/*
+const dropCollection = async () => {
+    try {
+
+      await mongoose.connection.dropCollection('routes');
+      console.log('Collection dropped successfully');
+    } catch (err) {
+      console.error('Error:', err);
+    } finally {
+      mongoose.connection.close();
+    }
+  };
+*/
 
 connectToDatabase();
+//dropCollection();
 
 // Schema for users of app
 const UserSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    },
+    airline: { type: String, required: true,},
+    airlineID: { type: String, required: true,},
+    sourceAirport: { type: String, required: false,},
+    sourceAirportID: {type: String, required: true,},
+    destinationAirport: {type: String, required: false,},
+    destinationAirportID: {type: String, required: true,},
+    codeshare: {type: String, required: false,},
+    stops: {type: String, required: false,},
+    equipment: {type: String, required: false,},
 });
-const User = mongoose.model('users', UserSchema);
-User.createIndexes();
+const User = mongoose.model('routes', UserSchema);
+//User.createIndexes();
 
 // For backend and express
 const express = require('express');
@@ -69,23 +71,39 @@ app.get("/", (req, resp) => {
     
 });
 
-///*
-app.post("/register", async (req, resp) => {
-    try {
-        const user = new User(req.body);
-        let result = await user.save();
-        result = result.toObject();
-        if (result) {
-            delete result.password;
-            resp.send(req.body);
-            console.log(result);
-        } else {
-            console.log("User already register");
-        }
-
-    } catch (e) {
-        resp.send("Something Went Wrong");
-    }
-});
-//*/
+const importCSVData = () => {
+    const results = []; // Array to hold parsed data
+  
+    // Read CSV file and parse it
+    fs.createReadStream('routes.csv')
+      .pipe(csv())
+      .on('data', (data) => {
+        // Push each row into the results array
+        // TODO: Nah cuz why is half the data NaN and/or missing??? I'm too tired
+        results.push({
+            airline: data.airline,
+            airlineID: parseInt(data.airlineID),
+            sourceAirport: data.sourceAirport,
+            sourceAirportID: parseInt(data.sourceAirportID),
+            destinationAirport: data.destinationAirport,
+            destinationAirportID: parseInt(data.destinationAirportID),
+            codeshare: data.codeshare,
+            stops: parseInt(data.stops),
+            equipment: data.equipment
+        });
+      })
+      .on('end', () => {
+        // Insert parsed data into MongoDB
+        User.insertMany(results)
+          .then(() => {
+            console.log('Data imported successfully!');
+          })
+          .catch((err) => {
+            console.error('Error inserting data:', err);
+          });
+      });
+  };
+  
+  // Call the function to import data
+  importCSVData();
 app.listen(5000);
