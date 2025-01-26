@@ -5,8 +5,8 @@ import Dropdown from "./Dropdown.jsx";
 const App = () => {
   return (
     <div className="flex flex-col space-y-8 p-6 h-screen">
-      <div>
-        <img src="src\assets\logo.png" className="justify-self-center w-100 md:w-160 lg:w-200" />
+      <div className="flex items-center justify-center h-screen">
+        <img src="src\assets\logo.png" className="justify-self-center w-100" />
         <div 
           className="relative h-[50vh] flex justify-center items-center"
           style={{
