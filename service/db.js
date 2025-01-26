@@ -19,11 +19,12 @@ const connectToDatabase = async () => {
 
 // Schema for users of app
 const routesSchema = new mongoose.Schema({
+    ID: { type: String, required: true, unique: true},
     airline: { type: String, required: true,},
     airlineID: { type: String, required: true,},
-    sourceAirport: { type: String, required: false,},
+    sourceAirport: { type: String, required: true,},
     sourceAirportID: {type: String, required: true,},
-    destinationAirport: {type: String, required: false,},
+    destinationAirport: {type: String, required: true,},
     destinationAirportID: {type: String, required: true,},
     codeshare: {type: String, required: false,},
     stops: {type: String, required: false,},
@@ -64,6 +65,7 @@ const importCSVData = () => {
     .on('data', (data) => {
       // Push each row into the results array
       routes.push({
+          ID: parseInt(data.ID),
           airline: data.airline,
           airlineID: parseInt(data.airlineID),
           sourceAirport: data.sourceAirport,
