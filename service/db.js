@@ -53,6 +53,7 @@ const importCSVData = () => {
       });
     })
     .on('end', () => {
+      console.log(results[0])
       // Insert parsed data into MongoDB
       User.insertMany(results)
         .then(() => {

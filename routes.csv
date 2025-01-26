@@ -1,4 +1,4 @@
-airline,airline ID, source airport, source airport id, destination airport, destination airport id, codeshare, stops, equipment
+airline,airlineID,sourceAirport,sourceAirportID,destinationAirport,destinationAirportID,codeshare,stops,equipment
 AA,24,ABE,4355,CLT,3876,Y,0,CR9 CR7 CRJ
 AA,24,ABE,4355,PHL,3752,,0,DH3
 AA,24,ABI,3718,DFW,3670,Y,0,ERD ER4 CRJ
