@@ -55,7 +55,7 @@ const airportSchema = new mongoose.Schema({
 const airportsTbl = mongoose.model('airports', airportSchema);
 
 const importCSVData = () => {
-  const routes = []; // Array to hold parsed data
+  const routes = []
   const airports = []
 
   // Read CSV file and parse it
@@ -115,7 +115,7 @@ const importCSVData = () => {
       await airportsTbl.deleteMany({})
 
       // Insert parsed data into MongoDB
-      await airportsTbl.insertMany(routes)
+      await airportsTbl.insertMany(airports)
       console.log('airport imported successfully!');
     });
 };
