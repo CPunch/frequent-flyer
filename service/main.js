@@ -1,15 +1,25 @@
 import express from "express";
 import ViteExpress from "vite-express";
-import { connectToDatabase, importCSVData } from "./db.js";
+import { connectToDatabase, importCSVData, getRouteByID, getAirportByID } from "./db.js";
 
 await connectToDatabase();
 if (process.argv.length > 2 && process.argv[2] === "import") {
   importCSVData();
 } else {
   const app = express();
-  app.get("/api/get-path", (_, res) => {
+  app.get("/api/get-route", (req, res) => {
+    // get route id from query params
+    const routeId = req.query.routeId;
+
+    // grab route
+    const route = getRouteByID(routeId)
+    const sourceAirport = getAirportByID(route.sourceAirportID)
+    const endAirport = getAirportByID(route.destinationAirportID)
     res.json({
-      path: "/api/get-path",
+      startLong: sourceAirport.longitude,
+      startLat: sourceAirport.latitude,
+      endLong: endAirport.longitude,
+      endLat: endAirport.latitude
     });
   });
 

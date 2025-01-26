@@ -120,5 +120,13 @@ const importCSVData = () => {
     });
 };
 
-export { connectToDatabase, importCSVData };
+const getAirportByID = (id) => {
+  return airportsTbl.findOne({ id: id });
+}
+
+const getRouteByID = (id) => {
+  return routesTbl.findOne({ id: id });
+}
+
+export { connectToDatabase, importCSVData, getAirportByID, getRouteByID };
 
