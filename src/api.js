@@ -17,9 +17,11 @@ const fetchRouteData = async (routeId) => {
     // Example: Accessing the coordinates
     console.log("Start Coordinates:", data.startLat, data.startLong);
     console.log("End Coordinates:", data.endLat, data.endLong);
+    return data
   } catch (error) {
     // Handle errors
     console.error("Error fetching route data:", error);
+    throw error;
   }
 };
 
