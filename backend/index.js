@@ -14,16 +14,24 @@ mongoose.connect('mongodb://localhost:27017/', {
 
 const mongoose = require('mongoose');
 const connectToDatabase = async () => {
-  try {
-    await mongoose.connect('mongodb+srv://chzbrgrs:L2tMFEsDvF8SrLiU@flightdb.0adq5.mongodb.net/', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('MongoDB connected successfully');
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-  }
-};
+    try {
+        await mongoose.connect('mongodb+srv://chzbrgrs:L2tMFEsDvF8SrLiU@flightdb.0adq5.mongodb.net/', {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        });
+        console.log('MongoDB connected successfully');
+    } catch (error) {
+        try {
+            await mongoose.connect('mongodb+srv://koi:c1BNM5nfxOP610l4@flightdb.0adq5.mongodb.net/', {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            });
+            console.log('MongoDB connected successfully');
+        } catch (error) {
+        console.error('Error connecting to MongoDB:', error);
+        }
+    };
+}
 
 connectToDatabase();
 
